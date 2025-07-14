@@ -4,7 +4,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
-import { uiActions } from './store/ui-slice';
+import { sendCartData } from './store/cart-slice';
 
 let isInitial = true;
 
@@ -15,48 +15,11 @@ function App() {
   const notification = useSelector(state => state.ui.notification);
 
   useEffect(() => {
-    async function sendCartData(cart) {
-      dispatch(
-        uiActions.showNotification({
-          status: 'pending',
-          title: 'Sending...',
-          message: 'Sending cart data!',
-        })
-      );
-      const response = await fetch('http://localhost:3000/cart', {
-        method: 'PUT',
-        body: JSON.stringify(cart),
-      });
-
-      if (!response.ok) {
-        throw new Error('Sending cart data failed.');
-      }
-
-      await response.json();
-
-      dispatch(
-        uiActions.showNotification({
-          status: 'success',
-          title: 'Success!',
-          message: 'Sent cart data successfully!',
-        })
-      );
-    }
-
     if (isInitial) {
       isInitial = false;
       return;
     }
-
-    sendCartData(cart).catch(error => {
-      dispatch(
-        uiActions.showNotification({
-          status: 'error',
-          title: 'Error!',
-          message: 'Sending cart data failed!',
-        })
-      );
-    });
+    dispatch(sendCartData(cart));
   }, [cart, dispatch]);
 
   return (
