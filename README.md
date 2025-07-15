@@ -18,7 +18,7 @@ Small React project about simple Redux concepts
 
 1. Clone the repo:
     ```bash
-    git clone https://github.com/LucasFdCosta/coffee-delivery.git
+    git clone https://github.com/LucasFdCosta/react-redux-2.git
     ```
 2. Navigate into the project directory:
     ```bash
